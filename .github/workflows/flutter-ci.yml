@@ -1,0 +1,24 @@
+name: Build all clients
+
+on:
+  workflow_dispatch:
+  push:
+    branches:
+      - main
+    paths-ignore:
+      - "docs/**"
+      - "README.md"
+      - "web-console/**"
+
+permissions:
+  contents: write
+
+concurrency:
+  group: build-all-clients-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  build-all-clients:
+    uses: ./.github/workflows/flutter-build.yml
+    with:
+      upload-artifact: true
