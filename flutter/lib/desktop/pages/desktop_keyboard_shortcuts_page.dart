@@ -21,6 +21,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 import '../../common.dart';
+import '../../common/vercel_theme.dart';
 import '../../common/widgets/keyboard_shortcuts/page_body.dart';
 
 class DesktopKeyboardShortcutsPage extends StatefulWidget {
@@ -37,19 +38,20 @@ class _DesktopKeyboardShortcutsPageState
 
   @override
   Widget build(BuildContext context) {
-    final foregroundColor =
-        AppBarTheme.of(context).titleTextStyle?.color ?? Colors.white;
     return Scaffold(
       appBar: AppBar(
-        title: Text(translate('Keyboard shortcuts')),
+        title: Text(
+          translate('Keyboard shortcuts'),
+          style: VcType.title(context, size: 18),
+        ),
         actions: [
-          TextButton.icon(
-            style: TextButton.styleFrom(foregroundColor: foregroundColor),
+          VcSecondaryButton(
+            label: translate('Reset to defaults'),
+            icon: const Icon(Icons.restore),
+            height: 34,
             onPressed: () =>
                 _bodyKey.currentState?.resetToDefaultsWithConfirm(),
-            icon: const Icon(Icons.restore),
-            label: Text(translate('Reset to defaults')),
-          ).marginOnly(right: 12),
+          ).marginOnly(right: 16),
         ],
       ),
       body: KeyboardShortcutsPageBody(

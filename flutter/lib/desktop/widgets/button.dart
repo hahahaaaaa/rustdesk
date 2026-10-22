@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 import '../../common.dart';
+import '../../common/vercel_theme.dart';
 
 class Button extends StatefulWidget {
   final GestureTapCallback onTap;
@@ -53,18 +54,18 @@ class _ButtonState extends State<Button> {
                 alignment: Alignment.center,
                 decoration: BoxDecoration(
                   color: pressed.value
-                      ? MyTheme.accent
+                      ? VcColors.muted(context)
                       : (widget.isOutline
                           ? Colors.transparent
-                          : MyTheme.button),
+                          : VcColors.text(context)),
                   border: Border.all(
                     color: pressed.value
-                        ? MyTheme.accent
+                        ? VcColors.muted(context)
                         : hover.value
-                            ? MyTheme.hoverBorder
+                            ? VcColors.text(context)
                             : (widget.isOutline
-                                ? widget.borderColor ?? MyTheme.border
-                                : MyTheme.button),
+                                ? widget.borderColor ?? VcColors.border(context)
+                                : VcColors.text(context)),
                   ),
                   borderRadius: BorderRadius.circular(widget.radius ?? 5),
                 ),
@@ -77,7 +78,7 @@ class _ButtonState extends State<Button> {
                       color: widget.isOutline
                           ? widget.textColor ??
                               Theme.of(context).textTheme.titleLarge?.color
-                          : Colors.white),
+                          : VcColors.canvas(context)),
                 ).marginSymmetric(horizontal: 12),
               )),
         ));
@@ -132,16 +133,18 @@ class _FixedWidthButtonState extends State<FixedWidthButton> {
             alignment: Alignment.center,
             decoration: BoxDecoration(
               color: pressed.value
-                  ? MyTheme.accent
-                  : (widget.isOutline ? Colors.transparent : MyTheme.button),
+                  ? VcColors.muted(context)
+                  : (widget.isOutline
+                      ? Colors.transparent
+                      : VcColors.text(context)),
               border: Border.all(
                 color: pressed.value
-                    ? MyTheme.accent
+                    ? VcColors.muted(context)
                     : hover.value
-                        ? MyTheme.hoverBorder
+                        ? VcColors.text(context)
                         : (widget.isOutline
-                            ? widget.borderColor ?? MyTheme.border
-                            : MyTheme.button),
+                            ? widget.borderColor ?? VcColors.border(context)
+                            : VcColors.text(context)),
               ),
               borderRadius: BorderRadius.circular(widget.radius ?? 5),
             ),
@@ -160,7 +163,7 @@ class _FixedWidthButtonState extends State<FixedWidthButton> {
                         color: widget.isOutline
                             ? widget.textColor ??
                                 Theme.of(context).textTheme.titleLarge?.color
-                            : Colors.white),
+                            : VcColors.canvas(context)),
                   ).marginSymmetric(horizontal: 12),
                 ),
               ],

@@ -3,6 +3,7 @@ import 'dart:convert';
 import 'package:desktop_multi_window/desktop_multi_window.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_hbb/common.dart';
+import 'package:flutter_hbb/common/vercel_theme.dart';
 import 'package:flutter_hbb/common/widgets/dialog.dart';
 import 'package:flutter_hbb/consts.dart';
 import 'package:flutter_hbb/models/state_model.dart';
@@ -115,7 +116,7 @@ class _FileManagerTabPageState extends State<FileManagerTabPage> {
           controller: tabController,
           onWindowCloseButton: handleWindowCloseButton,
           tail: const AddButton(),
-          selectedBorderColor: MyTheme.accent,
+          selectedBorderColor: VcColors.ink,
           labelGetter: DesktopTab.tablabelGetter,
         ));
     final tabWidget = isLinux
@@ -124,7 +125,7 @@ class _FileManagerTabPageState extends State<FileManagerTabPage> {
             context,
             Container(
               decoration: BoxDecoration(
-                  border: Border.all(color: MyTheme.color(context).border!)),
+                  border: Border.all(color: VcColors.border(context))),
               child: child,
             ));
     return isMacOS || kUseCompatibleUiMode

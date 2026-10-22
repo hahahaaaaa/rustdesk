@@ -6,6 +6,8 @@ import 'package:flutter_hbb/consts.dart';
 import 'package:flutter_hbb/models/platform_model.dart';
 import 'package:get/get.dart';
 
+import '../vercel_theme.dart';
+
 customImageQualityWidget(
     {required double initQuality,
     required double initFps,
@@ -204,12 +206,14 @@ List<Widget> ServerConfigImportExportWidgets(
     Tooltip(
       message: translate('Import server config'),
       child: IconButton(
-          icon: Icon(Icons.paste, color: Colors.grey), onPressed: import),
+          icon: const Icon(Icons.paste, color: VcColors.gray400),
+          onPressed: import),
     ),
     Tooltip(
         message: translate('Export Server Config'),
         child: IconButton(
-            icon: Icon(Icons.copy, color: Colors.grey), onPressed: export))
+            icon: const Icon(Icons.copy, color: VcColors.gray400),
+            onPressed: export))
   ];
 }
 

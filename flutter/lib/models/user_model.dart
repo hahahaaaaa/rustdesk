@@ -8,6 +8,7 @@ import 'package:flutter_hbb/models/ab_model.dart';
 import 'package:get/get.dart';
 
 import '../common.dart';
+import '../common/vercel_theme.dart';
 import '../utils/http_service.dart' as http;
 import 'model.dart';
 import 'platform_model.dart';
@@ -202,7 +203,7 @@ class UserModel {
       debugPrint("login: jsonDecode resp body failed: ${e.toString()}");
       if (resp.statusCode != 200) {
         BotToast.showText(
-            contentColor: Colors.red, text: 'HTTP ${resp.statusCode}');
+            contentColor: VcColors.ship, text: 'HTTP ${resp.statusCode}');
       }
       rethrow;
     }

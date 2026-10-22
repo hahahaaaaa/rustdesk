@@ -430,6 +430,306 @@ class _VcSecondaryButtonState extends State<VcSecondaryButton> {
   }
 }
 
+class VcPageHeader extends StatelessWidget {
+  const VcPageHeader({
+    super.key,
+    required this.label,
+    required this.title,
+    this.description,
+    this.actions = const [],
+    this.padding = const EdgeInsets.fromLTRB(20, 18, 20, 14),
+  });
+
+  final String label;
+  final String title;
+  final String? description;
+  final List<Widget> actions;
+  final EdgeInsetsGeometry padding;
+
+  @override
+  Widget build(BuildContext context) {
+    return Padding(
+      padding: padding,
+      child: Row(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Expanded(
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                VcMonoLabel(label),
+                const SizedBox(height: 8),
+                Text(title, style: VcType.title(context, size: 26)),
+                if (description != null) ...[
+                  const SizedBox(height: 8),
+                  Text(description!, style: VcType.muted(context)),
+                ],
+              ],
+            ),
+          ),
+          if (actions.isNotEmpty) ...[
+            const SizedBox(width: 12),
+            Row(mainAxisSize: MainAxisSize.min, children: actions),
+          ],
+        ],
+      ),
+    );
+  }
+}
+
+class VcSectionCard extends StatelessWidget {
+  const VcSectionCard({
+    super.key,
+    this.label,
+    this.title,
+    this.description,
+    this.trailing,
+    required this.children,
+    this.padding = const EdgeInsets.fromLTRB(16, 14, 16, 6),
+    this.contentPadding = const EdgeInsets.symmetric(vertical: 2),
+    this.margin = const EdgeInsets.symmetric(horizontal: 20, vertical: 6),
+    this.elevated = false,
+  });
+
+  final String? label;
+  final String? title;
+  final String? description;
+  final Widget? trailing;
+  final List<Widget> children;
+  final EdgeInsetsGeometry padding;
+  final EdgeInsetsGeometry contentPadding;
+  final EdgeInsetsGeometry margin;
+  final bool elevated;
+
+  @override
+  Widget build(BuildContext context) {
+    final hasHeader =
+        label != null || title != null || description != null || trailing != null;
+    return Padding(
+      padding: margin,
+      child: VcSurface(
+        elevated: elevated,
+        padding: padding,
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            if (hasHeader) ...[
+              Row(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Expanded(
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        if (label != null) VcMonoLabel(label!),
+                        if (label != null && title != null)
+                          const SizedBox(height: 6),
+                        if (title != null)
+                          Text(title!, style: VcType.body(context, size: 16,
+                              weight: FontWeight.w600)),
+                        if (description != null) ...[
+                          const SizedBox(height: 4),
+                          Text(description!, style: VcType.muted(context)),
+                        ],
+                      ],
+                    ),
+                  ),
+                  if (trailing != null) trailing!,
+                ],
+              ),
+              const SizedBox(height: 10),
+            ],
+            Padding(
+              padding: contentPadding,
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: children,
+              ),
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+}
+
+class VcSettingRow extends StatelessWidget {
+  const VcSettingRow({
+    super.key,
+    required this.title,
+    this.subtitle,
+    this.trailing,
+    this.onTap,
+    this.leading,
+    this.dense = false,
+    this.showDivider = true,
+  });
+
+  final String title;
+  final String? subtitle;
+  final Widget? trailing;
+  final Widget? leading;
+  final VoidCallback? onTap;
+  final bool dense;
+  final bool showDivider;
+
+  @override
+  Widget build(BuildContext context) {
+    final row = InkWell(
+      onTap: onTap,
+      borderRadius: BorderRadius.circular(6),
+      child: Padding(
+        padding: EdgeInsets.symmetric(
+            horizontal: 4, vertical: dense ? 9 : 11),
+        child: Row(
+          children: [
+            if (leading != null) ...[
+              IconTheme(
+                data: IconThemeData(
+                    size: 18, color: VcColors.muted(context)),
+                child: leading!,
+              ),
+              const SizedBox(width: 12),
+            ],
+            Expanded(
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text(
+                    title,
+                    style: VcType.body(context,
+                        size: dense ? 14 : 15, weight: FontWeight.w500),
+                  ),
+                  if (subtitle != null) ...[
+                    const SizedBox(height: 2),
+                    Text(subtitle!, style: VcType.muted(context, size: 12.5)),
+                  ],
+                ],
+              ),
+            ),
+            if (trailing != null) ...[
+              const SizedBox(width: 12),
+              trailing!,
+            ],
+          ],
+        ),
+      ),
+    );
+    if (!showDivider) return row;
+    return Column(
+      children: [
+        row,
+        Divider(
+          height: 1,
+          thickness: 1,
+          color: VcColors.border(context).withOpacity(0.7),
+        ),
+      ],
+    );
+  }
+}
+
+class VcBanner extends StatelessWidget {
+  const VcBanner({
+    super.key,
+    required this.text,
+    this.icon = Icons.info_outline_rounded,
+    this.color = VcColors.badgeText,
+    this.background = VcColors.badgeBg,
+  });
+
+  final String text;
+  final IconData icon;
+  final Color color;
+  final Color background;
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 10),
+      decoration: BoxDecoration(
+        color: background,
+        borderRadius: BorderRadius.circular(6),
+      ),
+      child: Row(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Icon(icon, size: 16, color: color),
+          const SizedBox(width: 8),
+          Expanded(
+            child: Text(
+              text,
+              style: TextStyle(
+                fontFamily: VcType.sans,
+                fontFamilyFallback: VcType.fallback,
+                fontSize: 12.5,
+                height: 1.45,
+                color: color,
+              ),
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+}
+
+class VcEmptyState extends StatelessWidget {
+  const VcEmptyState({
+    super.key,
+    required this.icon,
+    required this.title,
+    this.description,
+    this.action,
+  });
+
+  final IconData icon;
+  final String title;
+  final String? description;
+  final Widget? action;
+
+  @override
+  Widget build(BuildContext context) {
+    return Center(
+      child: Padding(
+        padding: const EdgeInsets.all(32),
+        child: Column(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            Container(
+              width: 48,
+              height: 48,
+              decoration: BoxDecoration(
+                color: VcColors.elevated(context),
+                borderRadius: BorderRadius.circular(10),
+              ),
+              child: Icon(icon, size: 22, color: VcColors.faint(context)),
+            ),
+            const SizedBox(height: 16),
+            Text(
+              title,
+              textAlign: TextAlign.center,
+              style: VcType.body(context, size: 15, weight: FontWeight.w600),
+            ),
+            if (description != null) ...[
+              const SizedBox(height: 6),
+              Text(
+                description!,
+                textAlign: TextAlign.center,
+                style: VcType.muted(context, size: 13),
+              ),
+            ],
+            if (action != null) ...[
+              const SizedBox(height: 16),
+              action!,
+            ],
+          ],
+        ),
+      ),
+    );
+  }
+}
+
 class VcIconButton extends StatefulWidget {
   const VcIconButton({
     super.key,

@@ -12,6 +12,7 @@ import 'package:url_launcher/url_launcher.dart';
 import 'package:url_launcher/url_launcher_string.dart';
 
 import '../../common.dart';
+import '../../common/vercel_theme.dart';
 import '../../common/widgets/dialog.dart';
 import '../../common/widgets/login.dart';
 import '../../consts.dart';
@@ -39,6 +40,22 @@ class SettingsPage extends StatefulWidget implements PageShape {
 }
 
 const url = 'https://rustdesk.com/';
+
+SettingsThemeData _vcSettingsTheme({required bool dark}) => SettingsThemeData(
+      settingsListBackground:
+          dark ? VcColors.darkCanvas : VcColors.paper,
+      settingsSectionBackground:
+          dark ? VcColors.darkSurface : VcColors.paper,
+      settingsTileTextColor: dark ? VcColors.darkText : VcColors.ink,
+      titleTextColor: dark ? VcColors.darkMuted : VcColors.gray500,
+      leadingIconsColor: dark ? VcColors.darkMuted : VcColors.gray600,
+      trailingTextColor: dark ? VcColors.darkMuted : VcColors.gray400,
+      tileDescriptionTextColor: dark ? VcColors.darkMuted : VcColors.gray600,
+      dividerColor: dark ? VcColors.darkBorder : VcColors.gray100,
+      tileHighlightColor: dark ? VcColors.darkElevated : VcColors.gray50,
+      inactiveTitleColor: dark ? VcColors.darkMuted : VcColors.gray400,
+      inactiveSubtitleColor: dark ? VcColors.darkMuted : VcColors.gray400,
+    );
 
 enum KeepScreenOn {
   never,
@@ -1089,6 +1106,9 @@ class _SettingsState extends State<SettingsPage> with WidgetsBindingObserver {
           ],
         ),
       ],
+      contentPadding: const EdgeInsets.only(top: 4, bottom: 24),
+      lightTheme: _vcSettingsTheme(dark: false),
+      darkTheme: _vcSettingsTheme(dark: true),
     );
     return settings;
   }
@@ -1144,7 +1164,7 @@ void showLanguageSettings(OverlayDialogManager dialogManager) async {
           children: [
                 getRadio(Text(translate('Default')), defaultOptionLang, lang,
                     isOptFixed ? null : setLang),
-                Divider(color: MyTheme.border),
+                Divider(color: VcColors.border(context)),
               ] +
               langs.map((e) {
                 final key = e[0] as String;
@@ -1255,11 +1275,14 @@ class __DisplayPageState extends State<_DisplayPage> {
       appBar: AppBar(
         leading: IconButton(
             onPressed: () => Navigator.pop(context),
-            icon: Icon(Icons.arrow_back_ios)),
+            icon: const Icon(Icons.arrow_back)),
         title: Text(translate('Display Settings')),
-        centerTitle: true,
       ),
-      body: SettingsList(sections: [
+      body: SettingsList(
+        contentPadding: const EdgeInsets.only(top: 4, bottom: 24),
+        lightTheme: _vcSettingsTheme(dark: false),
+        darkTheme: _vcSettingsTheme(dark: true),
+        sections: [
         SettingsSection(
           tiles: [
             _getPopupDialogRadioEntry(
@@ -1360,11 +1383,13 @@ class __ManageTrustedDevicesState extends State<_ManageTrustedDevices> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
+        leading: IconButton(
+            onPressed: () => Navigator.pop(context),
+            icon: const Icon(Icons.arrow_back)),
         title: Text(translate('Manage trusted devices')),
-        centerTitle: true,
         actions: [
           Obx(() => IconButton(
-              icon: Icon(Icons.delete, color: Colors.white),
+              icon: const Icon(Icons.delete),
               onPressed: selectedDevices.isEmpty
                   ? null
                   : () {

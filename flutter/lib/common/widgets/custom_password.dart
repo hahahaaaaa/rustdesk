@@ -4,6 +4,8 @@ import 'package:flutter_hbb/common.dart';
 import 'package:get/get.dart';
 import 'package:password_strength/password_strength.dart';
 
+import '../vercel_theme.dart';
+
 abstract class ValidationRule {
   String get name;
   bool validate(String value);
@@ -80,21 +82,24 @@ class PasswordStrengthIndicator extends StatelessWidget {
   Widget build(BuildContext context) {
     return Obx(() {
       var strength = estimatePasswordStrength(password.value);
+      final filled = VcColors.text(context);
+      final empty = VcColors.border(context);
       return Row(
         children: [
           Expanded(
-              child: _indicator(
-                  password.isEmpty ? Colors.grey : _getColor(strength))),
+              child: _indicator(password.isEmpty ? empty : filled)),
           Expanded(
               child: _indicator(password.isEmpty || strength < weakMedium
-                  ? Colors.grey
-                  : _getColor(strength))),
+                  ? empty
+                  : filled)),
           Expanded(
               child: _indicator(password.isEmpty || strength < mediumStrong
-                  ? Colors.grey
-                  : _getColor(strength))),
-          Text(password.isEmpty ? '' : translate(_getLabel(strength)))
-              .marginOnly(left: password.isEmpty ? 0 : 8),
+                  ? empty
+                  : filled)),
+          Text(
+            password.isEmpty ? '' : translate(_getLabel(strength)),
+            style: VcType.muted(context, size: 12),
+          ).marginOnly(left: password.isEmpty ? 0 : 8),
         ],
       );
     });
@@ -102,8 +107,12 @@ class PasswordStrengthIndicator extends StatelessWidget {
 
   Widget _indicator(Color color) {
     return Container(
-      height: 8,
-      color: color,
+      height: 6,
+      margin: const EdgeInsets.only(right: 4),
+      decoration: BoxDecoration(
+        color: color,
+        borderRadius: BorderRadius.circular(999),
+      ),
     );
   }
 
@@ -114,16 +123,6 @@ class PasswordStrengthIndicator extends StatelessWidget {
       return 'Medium';
     } else {
       return 'Strong';
-    }
-  }
-
-  Color _getColor(double strength) {
-    if (strength < weakMedium) {
-      return Colors.yellow;
-    } else if (strength < mediumStrong) {
-      return Colors.blue;
-    } else {
-      return Colors.green;
     }
   }
 }

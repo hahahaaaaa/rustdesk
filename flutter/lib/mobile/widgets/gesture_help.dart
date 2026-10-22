@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_hbb/common.dart';
+import 'package:flutter_hbb/common/vercel_theme.dart';
 import 'package:flutter_hbb/models/input_model.dart';
 import 'package:flutter_hbb/models/model.dart';
 import 'package:get/get.dart';
@@ -98,7 +99,7 @@ class _GestureHelpState extends State<GestureHelp> {
                         initialLabelIndex: _selectedIndex,
                         activeFgColor: Colors.white,
                         inactiveFgColor: Colors.white60,
-                        activeBgColor: [MyTheme.accent],
+                        activeBgColor: [VcColors.ink],
                         inactiveBgColor: Theme.of(context).hintColor,
                         totalSwitches: 2,
                         minWidth: 150,
@@ -361,7 +362,7 @@ class GestureInfo extends StatelessWidget {
   final double width;
 
   final iconSize = 35.0;
-  final iconColor = MyTheme.accent;
+  final iconColor = VcColors.link;
 
   @override
   Widget build(BuildContext context) {

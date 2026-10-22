@@ -15,6 +15,7 @@ import 'package:get/get.dart';
 import 'package:provider/provider.dart';
 
 import '../../common.dart';
+import '../../common/vercel_theme.dart';
 import '../../common/widgets/overlay.dart';
 import '../../common/widgets/dialog.dart';
 import '../../common/widgets/remote_input.dart';
@@ -511,7 +512,7 @@ class _RemotePageState extends State<RemotePage> with WidgetsBindingObserver {
                         : Icons.expand_less,
                     color: Colors.white,
                   ),
-                  backgroundColor: MyTheme.accent,
+                  backgroundColor: VcColors.ink,
                   onPressed: () {
                     setState(() {
                       if (keyboardIsVisible) {
@@ -602,8 +603,8 @@ class _RemotePageState extends State<RemotePage> with WidgetsBindingObserver {
   Widget getBottomAppBar() {
     final ffiModel = Provider.of<FfiModel>(context);
     return BottomAppBar(
-      elevation: 10,
-      color: MyTheme.accent,
+      elevation: 0,
+      color: VcColors.ink,
       child: Row(
         mainAxisSize: MainAxisSize.max,
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -897,7 +898,7 @@ class _RemotePageState extends State<RemotePage> with WidgetsBindingObserver {
       VoiceCallStatus.connected
     ].contains(gFFI.chatModel.voiceCallStatus.value);
     final menus = [
-      makeTextMenu('Text chat', Icon(Icons.message, color: MyTheme.accent),
+      makeTextMenu('Text chat', Icon(Icons.message, color: VcColors.ink),
           () => onPressedTextChat(widget.id)),
       isInVoice
           ? makeTextMenu(
@@ -913,7 +914,7 @@ class _RemotePageState extends State<RemotePage> with WidgetsBindingObserver {
               'Voice call',
               SvgPicture.asset(
                 'assets/call_wait.svg',
-                colorFilter: ColorFilter.mode(MyTheme.accent, BlendMode.srcIn),
+                colorFilter: ColorFilter.mode(VcColors.ink, BlendMode.srcIn),
               ),
               onPressVoiceCall),
     ];
@@ -1012,7 +1013,7 @@ class _KeyHelpToolsState extends State<KeyHelpTools> {
           shape: RoundedRectangleBorder(
             borderRadius: BorderRadius.circular(5.0),
           ),
-          backgroundColor: active == true ? MyTheme.accent80 : null,
+          backgroundColor: active == true ? Colors.white24 : null,
         ),
         child: icon != null
             ? Icon(icon, size: 14, color: Colors.white)
@@ -1328,7 +1329,7 @@ void showOptions(
         )));
   }
   if (displays.isNotEmpty) {
-    displays.add(const Divider(color: MyTheme.border));
+    displays.add(Divider(color: VcColors.border(context)));
   }
 
   List<TRadioMenu<String>> viewStyleRadios =
@@ -1380,7 +1381,7 @@ void showOptions(
       Obx(() => viewStyle.value == kRemoteViewStyleCustom
           ? MobileCustomScaleControls(ffi: gFFI)
           : const SizedBox.shrink()),
-      const Divider(color: MyTheme.border),
+      Divider(color: VcColors.border(context)),
       for (var e in imageQualityRadios)
         Obx(() => getRadio<String>(
             e.child,
@@ -1392,7 +1393,7 @@ void showOptions(
                     if (v != null) imageQuality.value = v;
                   }
                 : null)),
-      const Divider(color: MyTheme.border),
+      Divider(color: VcColors.border(context)),
       for (var e in codecRadios)
         Obx(() => getRadio<String>(
             e.child,
@@ -1404,7 +1405,7 @@ void showOptions(
                     if (v != null) codec.value = v;
                   }
                 : null)),
-      if (codecRadios.isNotEmpty) const Divider(color: MyTheme.border),
+      if (codecRadios.isNotEmpty) Divider(color: VcColors.border(context)),
     ];
     final rxCursorToggleValues = cursorToggles.map((e) => e.value.obs).toList();
     final cursorTogglesList = cursorToggles
@@ -1441,7 +1442,7 @@ void showOptions(
         .toList();
     final toggles = [
       ...cursorTogglesList,
-      if (cursorToggles.isNotEmpty) const Divider(color: MyTheme.border),
+      if (cursorToggles.isNotEmpty) Divider(color: VcColors.border(context)),
       ...displayTogglesList,
     ];
 
@@ -1482,7 +1483,7 @@ void showOptions(
       ));
     }
     if (popupDialogMenus.isNotEmpty) {
-      popupDialogMenus.add(const Divider(color: MyTheme.border));
+      popupDialogMenus.add(Divider(color: VcColors.border(context)));
     }
 
     return CustomAlertDialog(

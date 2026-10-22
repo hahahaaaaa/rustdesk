@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_hbb/common/vercel_theme.dart';
 
 const _statusFontSize = 12.0;
 const _statusSpacing = 4.0;
@@ -84,9 +85,7 @@ class _OidcAuthFallbackState extends State<_OidcAuthFallback> {
           fontSize: _statusFontSize,
           color: theme.colorScheme.onSurfaceVariant,
         );
-    final linkColor = theme.brightness == Brightness.dark
-        ? Colors.blue.shade300
-        : Colors.blue.shade800;
+    final linkColor = VcColors.link;
     final isTouchPlatform = _touchPlatforms.contains(theme.platform);
     final actionSize =
         isTouchPlatform ? kMinInteractiveDimension : _desktopActionSize;

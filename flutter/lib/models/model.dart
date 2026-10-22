@@ -39,6 +39,7 @@ import 'package:file_picker/file_picker.dart';
 import 'package:vector_math/vector_math.dart' show Vector2;
 
 import '../common.dart';
+import '../common/vercel_theme.dart';
 import '../utils/image.dart' as img;
 import '../common/widgets/dialog.dart';
 import 'input_model.dart';
@@ -639,8 +640,8 @@ class FfiModel with ChangeNotifier {
                                         printerNames[index]
                                     ? (defaultOrSelectedGroupValue.value ==
                                             kValuePrinterIncomingJobSelected
-                                        ? MyTheme.button
-                                        : MyTheme.button.withOpacity(0.5))
+                                        ? VcColors.ink
+                                        : VcColors.ink.withOpacity(0.5))
                                     : Theme.of(context).cardColor,
                                 borderRadius: BorderRadius.all(
                                   Radius.circular(5.0),
@@ -654,7 +655,12 @@ class FfiModel with ChangeNotifier {
                                   padding: const EdgeInsets.only(left: 10.0),
                                   child: Text(
                                     printerNames[index],
-                                    style: TextStyle(fontSize: 14),
+                                    style: TextStyle(
+                                        fontSize: 14,
+                                        color: selectedPrinterName.value ==
+                                                printerNames[index]
+                                            ? Colors.white
+                                            : null),
                                   ),
                                 ),
                               ),

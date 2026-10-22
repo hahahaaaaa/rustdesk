@@ -5,6 +5,7 @@ import 'dart:ui' as ui;
 import 'package:desktop_multi_window/desktop_multi_window.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_hbb/common.dart';
+import 'package:flutter_hbb/common/vercel_theme.dart';
 import 'package:flutter_hbb/common/shared_state.dart';
 import 'package:flutter_hbb/common/widgets/dialog.dart';
 import 'package:flutter_hbb/consts.dart';
@@ -24,7 +25,7 @@ import 'package:bot_toast/bot_toast.dart';
 import '../../models/platform_model.dart';
 
 class _MenuTheme {
-  static const Color blueColor = MyTheme.button;
+  static const Color blueColor = VcColors.link;
   // kMinInteractiveDimension
   static const double height = 20.0;
   static const double dividerHeight = 12.0;
@@ -136,7 +137,7 @@ class _ViewCameraTabPageState extends State<ViewCameraTabPage> {
         controller: tabController,
         onWindowCloseButton: handleWindowCloseButton,
         tail: const AddButton(),
-        selectedBorderColor: MyTheme.accent,
+        selectedBorderColor: VcColors.ink,
         pageViewBuilder: (pageView) => pageView,
         labelGetter: DesktopTab.tablabelGetter,
         tabBuilder: (key, icon, label, themeConf) => Obx(() {
@@ -218,7 +219,7 @@ class _ViewCameraTabPageState extends State<ViewCameraTabPage> {
             Obx(() => Container(
                   decoration: BoxDecoration(
                     border: Border.all(
-                        color: MyTheme.color(context).border!,
+                        color: VcColors.border(context),
                         width: stateGlobal.windowBorderWidth.value),
                   ),
                   child: child,

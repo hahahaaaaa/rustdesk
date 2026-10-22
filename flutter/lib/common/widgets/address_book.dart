@@ -19,6 +19,7 @@ import 'package:get/get.dart';
 import 'package:flex_color_picker/flex_color_picker.dart';
 
 import '../../common.dart';
+import '../../common/vercel_theme.dart';
 import 'dialog.dart';
 import 'login.dart';
 
@@ -595,7 +596,7 @@ class _AddressBookState extends State<AddressBook> {
                                   passwordVisible
                                       ? Icons.visibility
                                       : Icons.visibility_off,
-                                  color: MyTheme.lightTheme.primaryColor),
+                                  color: VcColors.muted(context)),
                               onPressed: () {
                                 setState(() {
                                   passwordVisible = !passwordVisible;

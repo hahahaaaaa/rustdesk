@@ -35,7 +35,10 @@ class _ScanPageState extends State<ScanPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Scan QR'),
+        leading: IconButton(
+            onPressed: () => Navigator.pop(context),
+            icon: const Icon(Icons.arrow_back)),
+        title: Text(translate('Scan QR')),
         actions: [
           _buildImagePickerButton(),
           _buildFlashToggleButton(),
@@ -55,10 +58,10 @@ class _ScanPageState extends State<ScanPage> {
       key: qrKey,
       onQRViewCreated: _onQRViewCreated,
       overlay: QrScannerOverlayShape(
-        borderColor: Colors.red,
-        borderRadius: 10,
-        borderLength: 30,
-        borderWidth: 10,
+        borderColor: Colors.white,
+        borderRadius: 12,
+        borderLength: 28,
+        borderWidth: 6,
         cutOutSize: scanArea,
       ),
       onPermissionSet: (ctrl, p) => _onPermissionSet(context, ctrl, p),
@@ -110,18 +113,16 @@ class _ScanPageState extends State<ScanPage> {
 
   Widget _buildImagePickerButton() {
     return IconButton(
-      color: Colors.white,
-      icon: Icon(Icons.image_search),
-      iconSize: 32.0,
+      icon: const Icon(Icons.image_search),
+      iconSize: 24.0,
       onPressed: _pickImage,
     );
   }
 
   Widget _buildFlashToggleButton() {
     return IconButton(
-      color: Colors.yellow,
-      icon: Icon(Icons.flash_on),
-      iconSize: 32.0,
+      icon: const Icon(Icons.flash_on),
+      iconSize: 24.0,
       onPressed: () async {
         await controller?.toggleFlash();
       },
@@ -130,9 +131,8 @@ class _ScanPageState extends State<ScanPage> {
 
   Widget _buildCameraSwitchButton() {
     return IconButton(
-      color: Colors.white,
-      icon: Icon(Icons.switch_camera),
-      iconSize: 32.0,
+      icon: const Icon(Icons.switch_camera),
+      iconSize: 24.0,
       onPressed: () async {
         await controller?.flipCamera();
       },

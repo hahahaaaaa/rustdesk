@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_hbb/common.dart';
 import 'package:flutter_hbb/common/shared_state.dart';
+import 'package:flutter_hbb/common/vercel_theme.dart';
 import 'package:flutter_hbb/common/widgets/dialog.dart';
 import 'package:flutter_hbb/common/widgets/login.dart';
 import 'package:flutter_hbb/consts.dart';
@@ -401,7 +402,7 @@ void showWaylandKeyboardInputWarningDialog(
                     }
                   },
             style: TextButton.styleFrom(
-              foregroundColor: Colors.blue,
+              foregroundColor: VcColors.link,
               padding: EdgeInsets.zero,
               minimumSize: Size.zero,
               tapTargetSize: MaterialTapTargetSize.shrinkWrap,
@@ -491,7 +492,8 @@ List<TTextMenu> toolbarControls(BuildContext context, String id, FFI ffi) {
               }
               handleOsPasswordEditIcon(sessionId, ffi.dialogManager);
             },
-            icon: Icon(Icons.edit, color: isMobile ? MyTheme.accent : null),
+            icon: Icon(Icons.edit,
+                color: isMobile ? VcColors.link : null),
           ),
         ),
         onPressed: () => handleOsPasswordAction(sessionId, ffi.dialogManager),
@@ -725,7 +727,7 @@ List<TTextMenu> toolbarControls(BuildContext context, String id, FFI ffi) {
                   ffi.recordingModel.start
                       ? Icons.pause_circle_filled
                       : Icons.videocam_outlined,
-                  color: MyTheme.accent),
+                  color: VcColors.link),
             )
           ],
         ),

@@ -9,6 +9,7 @@ import 'package:get/get.dart';
 import 'package:provider/provider.dart';
 
 import '../../common.dart';
+import '../../common/vercel_theme.dart';
 import '../../common/widgets/dialog.dart';
 import '../../consts.dart';
 import '../../models/platform_model.dart';
@@ -242,8 +243,7 @@ class ServiceNotRunningNotification extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Text(translate("android_start_service_tip"),
-                    style:
-                        const TextStyle(fontSize: 12, color: MyTheme.darkGray))
+                    style: VcType.muted(context, size: 12))
                 .marginOnly(bottom: 8),
             ElevatedButton.icon(
                 icon: const Icon(Icons.play_arrow),
@@ -308,18 +308,11 @@ class ScamWarningDialogState extends State<ScamWarningDialog> {
 
     return AlertDialog(
       content: ClipRRect(
-        borderRadius: BorderRadius.circular(20.0),
+        borderRadius: BorderRadius.circular(12.0),
         child: SingleChildScrollView(
           child: Container(
             decoration: BoxDecoration(
-              gradient: LinearGradient(
-                begin: Alignment.topRight,
-                end: Alignment.bottomLeft,
-                colors: [
-                  Color(0xffe242bc),
-                  Color(0xfff4727c),
-                ],
-              ),
+              color: VcColors.surface(context),
             ),
             padding: EdgeInsets.all(25.0),
             child: Column(
@@ -330,16 +323,12 @@ class ScamWarningDialogState extends State<ScamWarningDialog> {
                   children: [
                     Icon(
                       Icons.warning_amber_sharp,
-                      color: Colors.white,
+                      color: VcColors.ship,
                     ),
                     SizedBox(width: 10),
                     Text(
                       translate("Warning"),
-                      style: TextStyle(
-                        color: Colors.white,
-                        fontWeight: FontWeight.bold,
-                        fontSize: 20.0,
-                      ),
+                      style: VcType.title(context, size: 20),
                     ),
                   ],
                 ),
@@ -354,20 +343,12 @@ class ScamWarningDialogState extends State<ScamWarningDialog> {
                 Text(
                   translate("scam_title"),
                   textAlign: TextAlign.center,
-                  style: TextStyle(
-                    color: Colors.white,
-                    fontWeight: FontWeight.bold,
-                    fontSize: 22.0,
-                  ),
+                  style: VcType.title(context, size: 22),
                 ),
                 SizedBox(height: 18),
                 Text(
                   "${translate("scam_text1")}\n\n${translate("scam_text2")}\n",
-                  style: TextStyle(
-                    color: Colors.white,
-                    fontWeight: FontWeight.bold,
-                    fontSize: 16.0,
-                  ),
+                  style: VcType.muted(context, size: 15),
                 ),
                 Row(
                   children: <Widget>[
@@ -381,11 +362,7 @@ class ScamWarningDialogState extends State<ScamWarningDialog> {
                     ),
                     Text(
                       translate("Don't show again"),
-                      style: TextStyle(
-                        color: Colors.white,
-                        fontWeight: FontWeight.bold,
-                        fontSize: 15.0,
-                      ),
+                      style: VcType.body(context, size: 14),
                     ),
                   ],
                 ),
@@ -405,17 +382,10 @@ class ScamWarningDialogState extends State<ScamWarningDialog> {
                                       key: "show-scam-warning", value: "N");
                                 }
                               },
-                        style: ElevatedButton.styleFrom(
-                          backgroundColor: Colors.blueAccent,
-                        ),
                         child: Text(
                           isButtonLocked
                               ? "${translate("I Agree")} (${_countdown}s)"
                               : translate("I Agree"),
-                          style: TextStyle(
-                            fontWeight: FontWeight.bold,
-                            fontSize: 13.0,
-                          ),
                           maxLines: 2,
                           overflow: TextOverflow.ellipsis,
                         ),
@@ -429,14 +399,11 @@ class ScamWarningDialogState extends State<ScamWarningDialog> {
                           Navigator.of(context).pop();
                         },
                         style: ElevatedButton.styleFrom(
-                          backgroundColor: Colors.blueAccent,
+                          backgroundColor: VcColors.elevated(context),
+                          foregroundColor: VcColors.text(context),
                         ),
                         child: Text(
                           translate("Decline"),
-                          style: TextStyle(
-                            fontWeight: FontWeight.bold,
-                            fontSize: 13.0,
-                          ),
                           maxLines: 2,
                           overflow: TextOverflow.ellipsis,
                         ),
@@ -629,7 +596,7 @@ class _PermissionCheckerState extends State<PermissionChecker> {
                   Expanded(
                       child: Text(
                     translate("android_version_audio_tip"),
-                    style: const TextStyle(color: MyTheme.darkGray),
+                    style: VcType.muted(context, size: 12),
                   ))
                 ]),
           PermissionRow(
@@ -819,24 +786,27 @@ class PaddingCard extends StatelessWidget {
               padding: const EdgeInsets.fromLTRB(0, 5, 0, 8),
               child: Row(
                 children: [
-                  titleIcon?.marginOnly(right: 10) ?? const SizedBox.shrink(),
+                  titleIcon
+                          ?.copyWith(color: VcColors.muted(context), size: 18)
+                          .marginOnly(right: 10) ??
+                      const SizedBox.shrink(),
                   Expanded(
                     child: Text(title!,
-                        style: Theme.of(context)
-                            .textTheme
-                            .titleLarge
-                            ?.merge(TextStyle(fontWeight: FontWeight.bold))),
+                        style: VcType.body(context,
+                            size: 15, weight: FontWeight.w600)),
                   )
                 ],
               )));
     }
     return SizedBox(
         width: double.maxFinite,
-        child: Card(
-          shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(13),
-          ),
+        child: Container(
           margin: const EdgeInsets.fromLTRB(12.0, 10.0, 12.0, 0),
+          decoration: BoxDecoration(
+            color: VcColors.surface(context),
+            borderRadius: BorderRadius.circular(10),
+            boxShadow: VcColors.borderShadow(context),
+          ),
           child: Padding(
             padding:
                 const EdgeInsets.symmetric(vertical: 15.0, horizontal: 20.0),

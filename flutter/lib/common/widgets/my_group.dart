@@ -8,6 +8,7 @@ import 'package:flutter_hbb/models/state_model.dart';
 import 'package:get/get.dart';
 
 import '../../common.dart';
+import '../../common/vercel_theme.dart';
 
 class MyGroup extends StatefulWidget {
   final EdgeInsets? menuPadding;
@@ -296,7 +297,7 @@ class _MyGroupState extends State<MyGroup> {
                   width: 20,
                   height: 20,
                   child: Icon(IconFont.deviceGroupOutline,
-                      color: MyTheme.accent, size: 19),
+                      color: VcColors.muted(context), size: 19),
                 ).marginOnly(right: 4),
                 Expanded(child: Text(name)),
               ],

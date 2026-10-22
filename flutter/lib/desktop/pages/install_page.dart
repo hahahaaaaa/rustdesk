@@ -3,6 +3,7 @@ import 'dart:convert';
 import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_hbb/common.dart';
+import 'package:flutter_hbb/common/vercel_theme.dart';
 import 'package:flutter_hbb/desktop/widgets/tabbar_widget.dart';
 import 'package:flutter_hbb/models/platform_model.dart';
 import 'package:flutter_hbb/models/state_model.dart';
@@ -155,7 +156,6 @@ class _InstallPageBodyState extends State<_InstallPageBody>
   @override
   Widget build(BuildContext context) {
     final double em = 13;
-    final isDarkTheme = MyTheme.currentThemeMode() == ThemeMode.dark;
     return Scaffold(
         backgroundColor: null,
         body: SingleChildScrollView(
@@ -163,7 +163,7 @@ class _InstallPageBodyState extends State<_InstallPageBody>
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Text(translate('Installation'),
-                  style: Theme.of(context).textTheme.headlineMedium),
+                  style: VcType.title(context, size: 24)),
               Row(
                 children: [
                   Text('${translate('Installation Path')}:')
@@ -195,11 +195,9 @@ class _InstallPageBodyState extends State<_InstallPageBody>
               Container(
                   padding: EdgeInsets.all(12),
                   decoration: BoxDecoration(
-                    color: isDarkTheme
-                        ? Color.fromARGB(135, 87, 87, 90)
-                        : Colors.grey[100],
+                    color: VcColors.elevated(context),
                     borderRadius: BorderRadius.circular(8),
-                    border: Border.all(color: Colors.grey),
+                    border: Border.all(color: VcColors.border(context)),
                   ),
                   child: Row(
                     children: [

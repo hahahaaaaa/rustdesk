@@ -23,13 +23,13 @@
 
 import 'dart:convert';
 
-import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 
 import '../../../common.dart';
 import '../../../consts.dart';
 import '../../../models/platform_model.dart';
 import '../../../models/shortcut_model.dart';
+import '../../vercel_theme.dart';
 import 'display.dart';
 import 'recording_dialog.dart';
 import 'shortcut_actions.dart';
@@ -214,7 +214,6 @@ class KeyboardShortcutsPageBodyState extends State<KeyboardShortcutsPageBody> {
   @override
   Widget build(BuildContext context) {
     final enabled = ShortcutModel.isEnabled();
-    final theme = Theme.of(context);
 
     return ListView(
       padding: const EdgeInsets.all(16),
@@ -241,7 +240,7 @@ class KeyboardShortcutsPageBodyState extends State<KeyboardShortcutsPageBody> {
           padding: const EdgeInsets.symmetric(horizontal: 8),
           child: Text(
             translate('shortcut-page-description'),
-            style: TextStyle(color: theme.hintColor),
+            style: VcType.muted(context, size: 13),
           ),
         ),
         const SizedBox(height: 16),
@@ -266,6 +265,8 @@ class KeyboardShortcutsPageBodyState extends State<KeyboardShortcutsPageBody> {
       children: [
         Checkbox(
           value: value,
+          activeColor: VcColors.text(context),
+          checkColor: VcColors.canvas(context),
           onChanged: (v) async {
             if (v == null) return;
             await onChanged(v);
@@ -347,15 +348,19 @@ class KeyboardShortcutsPageBodyState extends State<KeyboardShortcutsPageBody> {
         children: [
           Text(
             translate(titleKey),
-            style: TextStyle(
-              fontWeight: isSub ? FontWeight.w500 : FontWeight.w600,
-              color: isSub
-                  ? Theme.of(context).hintColor
-                  : Theme.of(context).colorScheme.primary,
+            style: VcType.body(context,
+                size: 14,
+                weight: isSub ? FontWeight.w500 : FontWeight.w600).copyWith(
+              color: isSub ? VcColors.muted(context) : VcColors.text(context),
             ),
           ),
           const SizedBox(width: 8),
-          Expanded(child: Divider(thickness: isSub ? 0.5 : 1)),
+          Expanded(
+            child: Divider(
+              thickness: 1,
+              color: VcColors.border(context),
+            ),
+          ),
         ],
       ),
     );
@@ -379,22 +384,26 @@ class KeyboardShortcutsPageBodyState extends State<KeyboardShortcutsPageBody> {
         children: [
           Expanded(
             flex: 5,
-            child: Text(translate(entry.labelKey)),
+            child: Text(
+              translate(entry.labelKey),
+              style: VcType.body(context, size: 14),
+            ),
           ),
           Expanded(
             flex: 4,
             child: Text(
               shortcut ?? '—',
-              style: TextStyle(
-                fontFamily: defaultTargetPlatform == TargetPlatform.windows
-                    ? 'Consolas'
-                    : 'monospace',
-                color: hasBinding ? null : Theme.of(context).hintColor,
-              ),
+              style: VcType.monoValue(context,
+                  size: 13,
+                  weight: FontWeight.w400,
+                  color: hasBinding
+                      ? VcColors.text(context)
+                      : VcColors.faint(context)),
             ),
           ),
           IconButton(
             tooltip: widget.editButtonHint ?? translate('Edit'),
+            color: VcColors.muted(context),
             onPressed: () => _onEdit(entry),
             icon: const Icon(Icons.edit_outlined, size: 18),
           ),
@@ -403,6 +412,7 @@ class KeyboardShortcutsPageBodyState extends State<KeyboardShortcutsPageBody> {
             child: hasBinding
                 ? IconButton(
                     tooltip: translate('Clear'),
+                    color: VcColors.muted(context),
                     onPressed: () => _onClear(entry),
                     icon: const Icon(Icons.close, size: 18),
                   )
@@ -421,27 +431,31 @@ class KeyboardShortcutsPageBodyState extends State<KeyboardShortcutsPageBody> {
     return ListTile(
       dense: false,
       contentPadding: const EdgeInsets.symmetric(horizontal: 8),
-      title: Text(translate(entry.labelKey)),
+      title: Text(
+        translate(entry.labelKey),
+        style: VcType.body(context, size: 15),
+      ),
       subtitle: Text(
         shortcut ?? '—',
-        style: TextStyle(
-          fontFamily: defaultTargetPlatform == TargetPlatform.windows
-              ? 'Consolas'
-              : 'monospace',
-          color: hasBinding ? null : Theme.of(context).hintColor,
-        ),
+        style: VcType.monoValue(context,
+            size: 13,
+            weight: FontWeight.w400,
+            color:
+                hasBinding ? VcColors.text(context) : VcColors.faint(context)),
       ),
       trailing: Row(
         mainAxisSize: MainAxisSize.min,
         children: [
           IconButton(
             tooltip: widget.editButtonHint ?? translate('Edit'),
+            color: VcColors.muted(context),
             onPressed: () => _onEdit(entry),
             icon: const Icon(Icons.edit_outlined),
           ),
           if (hasBinding)
             IconButton(
               tooltip: translate('Clear'),
+              color: VcColors.muted(context),
               onPressed: () => _onClear(entry),
               icon: const Icon(Icons.close),
             )
@@ -473,7 +487,7 @@ class InfoTooltipIcon extends StatelessWidget {
         child: Icon(
           Icons.help_outline,
           size: 16,
-          color: Theme.of(context).hintColor,
+          color: VcColors.faint(context),
         ),
       ),
     );

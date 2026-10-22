@@ -13,6 +13,7 @@ import 'package:bot_toast/bot_toast.dart';
 
 import '../utils/http_service.dart' as http;
 import '../common.dart';
+import '../common/vercel_theme.dart';
 
 final syncAbOption = 'sync-ab-with-recent-sessions';
 bool shouldSyncAb() {
@@ -484,7 +485,7 @@ class AbModel {
         }
         if (hasSynced) {
           BotToast.showText(
-              contentColor: Colors.lightBlue,
+              contentColor: VcColors.ink,
               text: translate('synced_peer_readded_tip'));
           _syncAllFromRecent = true;
         }
@@ -733,7 +734,7 @@ class AbModel {
 
   Color getCurrentAbTagColor(String tag) {
     if (tag == kUntagged) {
-      return MyTheme.accent;
+      return VcColors.gray400;
     }
     int? colorValue = current.tagColors[tag];
     if (colorValue != null) {

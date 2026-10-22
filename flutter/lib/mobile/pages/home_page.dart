@@ -198,11 +198,23 @@ class WebHomePage extends StatelessWidget {
     stateGlobal.isInMainPage = true;
     handleUnilink(context);
     return Scaffold(
-      // backgroundColor: MyTheme.grayBg,
+      backgroundColor: VcColors.canvas(context),
       appBar: AppBar(
-        centerTitle: true,
-        title: Text("${bind.mainGetAppNameSync()} (Preview)"),
+        centerTitle: false,
+        titleSpacing: 20,
+        title: Row(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            Text(bind.mainGetAppNameSync()),
+            const SizedBox(width: 8),
+            const VcPill(label: 'Preview'),
+          ],
+        ),
         actions: connectionPage.appBarActions,
+        bottom: PreferredSize(
+          preferredSize: const Size.fromHeight(1),
+          child: Container(height: 1, color: VcColors.border(context)),
+        ),
       ),
       body: connectionPage,
     );

@@ -11,6 +11,7 @@ import 'package:path/path.dart' as path;
 import 'package:flutter_hbb/web/dummy.dart'
     if (dart.library.html) 'package:flutter_hbb/web/web_unique.dart';
 
+import '../common/vercel_theme.dart';
 import '../consts.dart';
 import 'model.dart';
 import 'platform_model.dart';
@@ -224,7 +225,7 @@ class FileModel {
       return CustomAlertDialog(
         title: Row(
           children: [
-            const Icon(Icons.warning_rounded, color: Colors.red),
+            const Icon(Icons.warning_rounded, color: VcColors.ship),
             Text(title).paddingOnly(
               left: 10,
             ),
@@ -865,7 +866,7 @@ class FileController {
         title: Row(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            const Icon(Icons.warning_rounded, color: Colors.red),
+            const Icon(Icons.warning_rounded, color: VcColors.ship),
             Expanded(
               child: Text(title).paddingOnly(
                 left: 10,
@@ -883,7 +884,7 @@ class FileController {
               translate("This is irreversible!"),
               style: const TextStyle(
                 fontWeight: FontWeight.bold,
-                color: Colors.red,
+                color: VcColors.ship,
               ),
             ).paddingOnly(top: 20),
             showCheckbox

@@ -1203,6 +1203,23 @@ pub fn is_setup(name: &str) -> bool {
     !config::is_disable_installation() && name.to_lowercase().ends_with("install.exe")
 }
 
+pub const DEFAULT_RENDEZVOUS_SERVER: &str = "desktop.voltmonkey.com.cn";
+pub const DEFAULT_API_SERVER: &str = "https://desktop.voltmonkey.com.cn";
+
+pub fn ensure_default_server_config() {
+    if Config::get_option(keys::OPTION_CUSTOM_RENDEZVOUS_SERVER).is_empty()
+        && config::PROD_RENDEZVOUS_SERVER.read().unwrap().is_empty()
+    {
+        Config::set_option(
+            keys::OPTION_CUSTOM_RENDEZVOUS_SERVER.into(),
+            DEFAULT_RENDEZVOUS_SERVER.into(),
+        );
+    }
+    if Config::get_option(keys::OPTION_API_SERVER).is_empty() {
+        Config::set_option(keys::OPTION_API_SERVER.into(), DEFAULT_API_SERVER.into());
+    }
+}
+
 pub fn get_custom_rendezvous_server(custom: String) -> String {
     #[cfg(windows)]
     if let Ok(lic) = crate::platform::windows::get_license_from_exe_name() {

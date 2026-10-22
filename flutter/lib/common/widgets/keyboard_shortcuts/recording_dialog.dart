@@ -15,6 +15,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
 import '../../../common.dart';
+import '../../vercel_theme.dart';
 import 'shortcut_utils.dart';
 
 /// Result of the recording dialog.
@@ -308,13 +309,14 @@ class _RecordingDialogState extends State<_RecordingDialog> {
       // is still captured.
       statusLine = Row(
         children: [
-          const Icon(Icons.close, size: 16, color: Colors.red),
+          const Icon(Icons.close, size: 16, color: VcColors.ship),
           const SizedBox(width: 6),
           Flexible(
             child: Text(
               translate('shortcut-key-not-supported')
                   .replaceAll('{}', _unsupportedKey!),
-              style: const TextStyle(color: Colors.red),
+              style: VcType.body(context, size: 13)
+                  .copyWith(color: VcColors.ship),
             ),
           ),
         ],
@@ -322,18 +324,19 @@ class _RecordingDialogState extends State<_RecordingDialog> {
     } else if (!hasKey) {
       statusLine = Text(
         translate('shortcut-recording-press-keys-tip'),
-        style: TextStyle(color: Theme.of(context).hintColor),
+        style: VcType.muted(context, size: 13),
       );
     } else if (!_hasRequiredPrefix) {
       statusLine = Row(
         children: [
-          Icon(Icons.close, size: 16, color: Colors.red),
+          const Icon(Icons.close, size: 16, color: VcColors.ship),
           const SizedBox(width: 6),
           Flexible(
             child: Text(
               translate('shortcut-must-include-modifiers')
                   .replaceAll('{}', _formatPrefix()),
-              style: const TextStyle(color: Colors.red),
+              style: VcType.body(context, size: 13)
+                  .copyWith(color: VcColors.ship),
             ),
           ),
         ],
@@ -342,13 +345,14 @@ class _RecordingDialogState extends State<_RecordingDialog> {
       final otherLabel = widget.actionLabelLookup(conflictId);
       statusLine = Row(
         children: [
-          Icon(Icons.warning_amber_outlined,
-              size: 16, color: Colors.orange.shade700),
+          const Icon(Icons.warning_amber_outlined,
+              size: 16, color: VcColors.preview),
           const SizedBox(width: 6),
           Flexible(
             child: Text(
               '${translate('shortcut-already-bound-to')} "$otherLabel"',
-              style: TextStyle(color: Colors.orange.shade700),
+              style: VcType.body(context, size: 13)
+                  .copyWith(color: VcColors.preview),
             ),
           ),
         ],
@@ -356,9 +360,11 @@ class _RecordingDialogState extends State<_RecordingDialog> {
     } else {
       statusLine = Row(
         children: [
-          const Icon(Icons.check, size: 16, color: Colors.green),
+          const Icon(Icons.check, size: 16, color: VcColors.develop),
           const SizedBox(width: 6),
-          Text(translate('Valid'), style: const TextStyle(color: Colors.green)),
+          Text(translate('Valid'),
+              style: VcType.body(context, size: 13)
+                  .copyWith(color: VcColors.develop)),
         ],
       );
     }
@@ -380,25 +386,27 @@ class _RecordingDialogState extends State<_RecordingDialog> {
             mainAxisSize: MainAxisSize.min,
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Text(translate('shortcut-recording-instruction')),
+              Text(translate('shortcut-recording-instruction'),
+                  style: VcType.body(context, size: 14)),
               const SizedBox(height: 12),
               Container(
                 width: double.infinity,
                 padding:
                     const EdgeInsets.symmetric(vertical: 18, horizontal: 12),
                 decoration: BoxDecoration(
-                  border: Border.all(color: Theme.of(context).dividerColor),
-                  borderRadius: BorderRadius.circular(4),
+                  color: VcColors.elevated(context),
+                  border: Border.all(color: VcColors.border(context)),
+                  borderRadius: BorderRadius.circular(8),
                 ),
                 child: Text(
                   _formatCombo(),
                   textAlign: TextAlign.center,
-                  style: TextStyle(
-                    fontSize: 18,
-                    fontWeight: FontWeight.w600,
-                    color: hasKey
-                        ? Theme.of(context).textTheme.titleLarge?.color
-                        : Theme.of(context).hintColor,
+                  style: VcType.monoValue(
+                    context,
+                    size: 18,
+                    weight: FontWeight.w500,
+                    color:
+                        hasKey ? VcColors.text(context) : VcColors.faint(context),
                   ),
                 ),
               ),

@@ -12,6 +12,7 @@ import 'package:window_manager/window_manager.dart';
 
 import '../common.dart';
 import '../common/formatter/id_formatter.dart';
+import '../common/vercel_theme.dart';
 import '../desktop/pages/server_page.dart' as desktop;
 import '../desktop/widgets/tabbar_widget.dart';
 import '../mobile/pages/server_page.dart';
@@ -382,7 +383,7 @@ class ServerModel with ChangeNotifier {
         return CustomAlertDialog(
           title: Row(children: [
             const Icon(Icons.warning_amber_sharp,
-                color: Colors.redAccent, size: 28),
+                color: VcColors.ship, size: 28),
             const SizedBox(width: 10),
             Text(translate("Warning")),
           ]),
@@ -409,7 +410,7 @@ class ServerModel with ChangeNotifier {
         return CustomAlertDialog(
           title: Row(children: [
             const Icon(Icons.warning_amber_sharp,
-                color: Colors.redAccent, size: 28),
+                color: VcColors.ship, size: 28),
             const SizedBox(width: 10),
             Text(translate("Warning")),
           ]),

@@ -11,6 +11,7 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 import '../../common.dart';
+import '../vercel_theme.dart';
 import './dialog.dart';
 import './oidc_auth_status.dart';
 
@@ -881,7 +882,8 @@ Future<bool?> _openLoginDialog() async {
                 if (!inProgress)
                   SelectableText(
                     error.toString(),
-                    style: const TextStyle(fontSize: 11, color: Colors.red),
+                    style: VcType.body(context, size: 11)
+                        .copyWith(color: VcColors.ship),
                     textAlign: TextAlign.center,
                   ),
               ],
@@ -938,6 +940,7 @@ Future<bool?> _openLoginDialog() async {
       children: [
         Text(
           translate('Login'),
+          style: VcType.title(context, size: 20),
         ).marginOnly(top: MyTheme.dialogPadding),
         MouseRegion(
           onEnter: (_) => setState(() => isCloseHovered = true),
@@ -945,20 +948,14 @@ Future<bool?> _openLoginDialog() async {
           child: InkWell(
             child: Icon(
               Icons.close,
-              size: 25,
-              // No need to handle the branch of null.
-              // Because we can ensure the color is not null when debug.
+              size: 22,
               color: isCloseHovered
-                  ? Colors.white
-                  : Theme.of(context)
-                      .textTheme
-                      .titleLarge
-                      ?.color
-                      ?.withOpacity(0.55),
+                  ? VcColors.text(context)
+                  : VcColors.faint(context),
             ),
             onTap: onDialogCancel,
-            hoverColor: Colors.red,
-            borderRadius: BorderRadius.circular(5),
+            hoverColor: VcColors.elevated(context),
+            borderRadius: BorderRadius.circular(6),
           ),
         ).marginOnly(top: 10, right: 15),
       ],

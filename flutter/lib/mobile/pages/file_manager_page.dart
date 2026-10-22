@@ -8,6 +8,7 @@ import 'package:get/get.dart';
 import 'package:toggle_switch/toggle_switch.dart';
 
 import '../../common.dart';
+import '../../common/vercel_theme.dart';
 import '../../common/widgets/dialog.dart';
 import '../../consts.dart';
 
@@ -291,13 +292,9 @@ class _FileManagerPageState extends State<FileManagerPage> {
           centerTitle: true,
           title: ToggleSwitch(
             initialLabelIndex: showLocal ? 0 : 1,
-            activeBgColor: [MyTheme.idColor],
-            inactiveBgColor: Theme.of(context).brightness == Brightness.light
-                ? MyTheme.grayBg
-                : null,
-            inactiveFgColor: Theme.of(context).brightness == Brightness.light
-                ? Colors.black54
-                : null,
+            activeBgColor: [VcColors.ink],
+            inactiveBgColor: VcColors.elevated(context),
+            inactiveFgColor: VcColors.muted(context),
             totalSwitches: 2,
             minWidth: 100,
             fontSize: 15,
@@ -959,8 +956,9 @@ class BottomSheetBody extends StatelessWidget {
             height: 65,
             alignment: Alignment.centerLeft,
             decoration: BoxDecoration(
-                color: MyTheme.accent50,
-                borderRadius: BorderRadius.vertical(top: Radius.circular(10))),
+                color: VcColors.surface(context),
+                borderRadius:
+                    const BorderRadius.vertical(top: Radius.circular(10))),
             child: Padding(
               padding: EdgeInsets.symmetric(horizontal: 15),
               child: Row(
@@ -974,9 +972,10 @@ class BottomSheetBody extends StatelessWidget {
                         mainAxisAlignment: MainAxisAlignment.center,
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
-                          Text(title, style: TextStyle(fontSize: 18)),
-                          Text(text,
-                              style: TextStyle(fontSize: 14)) // TODO color
+                          Text(title,
+                              style: VcType.body(context,
+                                  size: 16, weight: FontWeight.w600)),
+                          Text(text, style: VcType.muted(context, size: 12))
                         ],
                       )
                     ],

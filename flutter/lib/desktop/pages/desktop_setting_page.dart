@@ -6,6 +6,7 @@ import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_hbb/common.dart';
+import 'package:flutter_hbb/common/vercel_theme.dart';
 import 'package:flutter_hbb/common/widgets/audio_input.dart';
 import 'package:flutter_hbb/common/widgets/setting_widgets.dart';
 import 'package:flutter_hbb/consts.dart';
@@ -39,7 +40,6 @@ const double _kRadioLeftMargin = 10;
 const double _kListViewBottomMargin = 15;
 const double _kTitleFontSize = 20;
 const double _kContentFontSize = 15;
-const Color _accentColor = MyTheme.accent;
 const String _kSettingPageControllerTag = 'settingPageController';
 const String _kSettingPageTabKeyTag = 'settingPageTabKey';
 
@@ -309,38 +309,34 @@ class _DesktopSettingPageState extends State<DesktopSettingPage>
     final settingsText = Text(
       translate('Settings'),
       textAlign: TextAlign.left,
-      style: const TextStyle(
-        color: _accentColor,
-        fontSize: _kTitleFontSize,
-        fontWeight: FontWeight.w400,
-      ),
+      style: VcType.title(context, size: 24),
     );
-    return Row(
-      children: [
-        if (isWeb)
-          IconButton(
-            onPressed: () {
-              if (Navigator.canPop(context)) {
-                Navigator.pop(context);
-              }
-            },
-            icon: Icon(Icons.arrow_back),
-          ).marginOnly(left: 5),
-        if (isWeb)
-          SizedBox(
-            height: 62,
-            child: Align(
-              alignment: Alignment.center,
-              child: settingsText,
+    return Padding(
+      padding: const EdgeInsets.fromLTRB(20, 22, 20, 12),
+      child: Row(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          if (isWeb)
+            VcIconButton(
+              icon: const Icon(Icons.arrow_back, size: 18),
+              onPressed: () {
+                if (Navigator.canPop(context)) {
+                  Navigator.pop(context);
+                }
+              },
+            ).marginOnly(right: 10),
+          Expanded(
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                const VcMonoLabel('Preferences'),
+                const SizedBox(height: 6),
+                settingsText,
+              ],
             ),
-          ).marginOnly(left: 20),
-        if (!isWeb)
-          SizedBox(
-            height: 62,
-            child: settingsText,
-          ).marginOnly(left: 20, top: 10),
-        const Spacer(),
-      ],
+          ),
+        ],
+      ),
     );
   }
 
@@ -355,10 +351,17 @@ class _DesktopSettingPageState extends State<DesktopSettingPage>
   Widget _listItem({required _TabInfo tab}) {
     return Obx(() {
       bool selected = tab.key == selectedTab.value;
-      return SizedBox(
+      final color =
+          selected ? VcColors.text(context) : VcColors.muted(context);
+      return Container(
         width: _kTabWidth,
-        height: _kTabHeight,
+        margin: const EdgeInsets.symmetric(horizontal: 8, vertical: 1),
+        decoration: BoxDecoration(
+          color: selected ? VcColors.elevated(context) : Colors.transparent,
+          borderRadius: BorderRadius.circular(6),
+        ),
         child: InkWell(
+          borderRadius: BorderRadius.circular(6),
           onTap: () {
             if (selectedTab.value != tab.key) {
               int index = DesktopSettingPage.tabKeys.indexOf(tab.key);
@@ -369,25 +372,34 @@ class _DesktopSettingPageState extends State<DesktopSettingPage>
             }
             selectedTab.value = tab.key;
           },
-          child: Row(children: [
-            Container(
-              width: 4,
-              height: _kTabHeight * 0.7,
-              color: selected ? _accentColor : null,
-            ),
-            Icon(
-              selected ? tab.selected : tab.unselected,
-              color: selected ? _accentColor : null,
-              size: 20,
-            ).marginOnly(left: 13, right: 10),
-            Text(
-              translate(tab.label),
-              style: TextStyle(
-                  color: selected ? _accentColor : null,
-                  fontWeight: FontWeight.w400,
-                  fontSize: _kContentFontSize),
-            ),
-          ]),
+          child: SizedBox(
+            height: _kTabHeight - 4,
+            child: Row(children: [
+              Container(
+                width: 2,
+                height: 18,
+                decoration: BoxDecoration(
+                  color: selected ? VcColors.text(context) : Colors.transparent,
+                  borderRadius: BorderRadius.circular(1),
+                ),
+              ).marginOnly(left: 10),
+              Icon(
+                selected ? tab.selected : tab.unselected,
+                color: color,
+                size: 18,
+              ).marginOnly(left: 12, right: 10),
+              Expanded(
+                child: Text(
+                  translate(tab.label),
+                  style: TextStyle(
+                      color: color,
+                      fontWeight:
+                          selected ? FontWeight.w500 : FontWeight.w400,
+                      fontSize: 14),
+                ),
+              ),
+            ]),
+          ),
         ),
       );
     });
@@ -1862,7 +1874,7 @@ class _NetworkState extends State<_Network> with AutomaticKeepAliveClientMixin {
             );
 
       return ListTile(
-        leading: Icon(icon, color: _accentColor),
+        leading: Icon(icon, color: VcColors.muted(context), size: 20),
         title: titleWidget,
         enabled: !locked,
         onTap: onTap,
@@ -2611,7 +2623,7 @@ class _AboutState extends State<_About> {
                     style: linkStyle,
                   ).marginSymmetric(vertical: 4.0)),
               Container(
-                decoration: const BoxDecoration(color: Color(0xFF2c8cff)),
+                decoration: const BoxDecoration(color: VcColors.ink),
                 padding:
                     const EdgeInsets.symmetric(vertical: 24, horizontal: 8),
                 child: SelectionArea(
@@ -2654,13 +2666,22 @@ Widget _Card(
     {required String title,
     required List<Widget> children,
     List<Widget>? title_suffix}) {
-  return Row(
-    children: [
-      Flexible(
-        child: SizedBox(
-          width: _kCardFixedWidth,
-          child: Card(
+  return Builder(builder: (context) {
+    return Row(
+      children: [
+        Flexible(
+          child: SizedBox(
+            width: _kCardFixedWidth,
+            child: Container(
+            margin: const EdgeInsets.only(
+                left: _kCardLeftMargin, top: 12, bottom: 4),
+            decoration: BoxDecoration(
+              color: VcColors.surface(context),
+              borderRadius: BorderRadius.circular(10),
+              boxShadow: VcColors.borderShadow(context),
+            ),
             child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Row(
                   children: [
@@ -2668,22 +2689,27 @@ Widget _Card(
                         child: Text(
                       translate(title),
                       textAlign: TextAlign.start,
-                      style: const TextStyle(
-                        fontSize: _kTitleFontSize,
-                      ),
+                      style: VcType.body(context,
+                          size: 15, weight: FontWeight.w600),
                     )),
                     ...?title_suffix
                   ],
-                ).marginOnly(left: _kContentHMargin, top: 10, bottom: 10),
+                ).marginOnly(
+                    left: _kContentHMargin,
+                    right: _kContentHMargin,
+                    top: 14,
+                    bottom: 8),
                 ...children
                     .map((e) => e.marginOnly(top: 4, right: _kContentHMargin)),
+                const SizedBox(height: 14),
               ],
-            ).marginOnly(bottom: 10),
-          ).marginOnly(left: _kCardLeftMargin, top: 15),
+            ),
+            ),
+          ),
         ),
-      ),
-    ],
-  );
+      ],
+    );
+  });
 }
 
 // ignore: non_constant_identifier_names
@@ -2749,13 +2775,15 @@ Widget _OptionCheckBox(
             Expanded(
                 child: Text(
               translate(label),
-              style: TextStyle(color: disabledTextColor(context, enabled)),
+              style: VcType.body(context, size: 14).copyWith(
+                  color: disabledTextColor(context, enabled)),
             ))
           else ...[
             Flexible(
               child: Text(
                 translate(label),
-                style: TextStyle(color: disabledTextColor(context, enabled)),
+                style: VcType.body(context, size: 14).copyWith(
+                    color: disabledTextColor(context, enabled)),
               ),
             ),
             trailing,
@@ -2793,8 +2821,7 @@ Widget _Radio<T>(BuildContext context,
         Expanded(
           child: Text(translate(label),
                   overflow: autoNewLine ? null : TextOverflow.ellipsis,
-                  style: TextStyle(
-                      fontSize: _kContentFontSize,
+                  style: VcType.body(context, size: 14).copyWith(
                       color: disabledTextColor(context, onChange2 != null)))
               .marginOnly(left: 5),
         ),

@@ -874,7 +874,7 @@ void setPasswordDialog({VoidCallback? notEmptyCallback}) async {
       title: Row(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
-          Icon(Icons.key, color: MyTheme.accent),
+          Icon(Icons.key, color: VcColors.text(context)),
           Text(translate("Set Password")).paddingOnly(left: 10),
         ],
       ),
@@ -961,12 +961,12 @@ void setPasswordDialog({VoidCallback? notEmptyCallback}) async {
                           e.name,
                           style: TextStyle(
                               color: checked
-                                  ? const Color(0xFF0A9471)
-                                  : Color.fromARGB(255, 198, 86, 157)),
+                                  ? VcColors.text(context)
+                                  : Colors.red[700]),
                         ),
                         backgroundColor: checked
-                            ? const Color(0xFFD0F7ED)
-                            : Color.fromARGB(255, 247, 205, 232));
+                            ? VcColors.elevated(context)
+                            : const Color(0xFFFDECEC));
                   }).toList(),
                 ))
           ],

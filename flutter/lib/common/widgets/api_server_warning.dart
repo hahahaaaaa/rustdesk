@@ -3,6 +3,8 @@ import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:flutter_hbb/models/platform_model.dart';
 
+import '../vercel_theme.dart';
+
 String _resolveApiServer({required String api, required String custom}) {
   final key = 'resolve-api-server:${jsonEncode([api, custom])}';
   final response = jsonDecode(bind.mainGetCommonSync(key: key));
@@ -63,7 +65,8 @@ class ApiServerWarning extends StatelessWidget {
           alignment: AlignmentDirectional.centerStart,
           child: Text(
             controller.text.trim().isEmpty ? emptyMessage : message,
-            style: TextStyle(color: Colors.orange.shade700),
+            style: VcType.body(context, size: 13)
+                .copyWith(color: VcColors.ship),
           ),
         );
       },

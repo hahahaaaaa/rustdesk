@@ -13,6 +13,7 @@ import 'package:get/get.dart';
 import 'package:provider/provider.dart';
 
 import '../../common.dart';
+import '../../common/vercel_theme.dart';
 import '../../common/widgets/overlay.dart';
 import '../../common/widgets/dialog.dart';
 import '../../common/widgets/remote_input.dart';
@@ -210,7 +211,7 @@ class _ViewCameraPageState extends State<ViewCameraPage>
                         : Icons.expand_less,
                     color: Colors.white,
                   ),
-                  backgroundColor: MyTheme.accent,
+                  backgroundColor: VcColors.ink,
                   onPressed: () {
                     setState(() {
                       if (keyboardIsVisible) {
@@ -293,8 +294,8 @@ class _ViewCameraPageState extends State<ViewCameraPage>
 
   Widget getBottomAppBar() {
     return BottomAppBar(
-      elevation: 10,
-      color: MyTheme.accent,
+      elevation: 0,
+      color: VcColors.ink,
       child: Row(
         mainAxisSize: MainAxisSize.max,
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -517,7 +518,7 @@ class _ViewCameraPageState extends State<ViewCameraPage>
       VoiceCallStatus.connected
     ].contains(gFFI.chatModel.voiceCallStatus.value);
     final menus = [
-      makeTextMenu('Text chat', Icon(Icons.message, color: MyTheme.accent),
+      makeTextMenu('Text chat', Icon(Icons.message, color: VcColors.ink),
           () => onPressedTextChat(widget.id)),
       isInVoice
           ? makeTextMenu(
@@ -533,7 +534,7 @@ class _ViewCameraPageState extends State<ViewCameraPage>
               'Voice call',
               SvgPicture.asset(
                 'assets/call_wait.svg',
-                colorFilter: ColorFilter.mode(MyTheme.accent, BlendMode.srcIn),
+                colorFilter: ColorFilter.mode(VcColors.ink, BlendMode.srcIn),
               ),
               onPressVoiceCall),
     ];
@@ -623,7 +624,7 @@ void showOptions(
         )));
   }
   if (displays.isNotEmpty) {
-    displays.add(const Divider(color: MyTheme.border));
+    displays.add(Divider(color: VcColors.border(context)));
   }
 
   List<TRadioMenu<String>> viewStyleRadios =
@@ -653,7 +654,7 @@ void showOptions(
                     if (v != null) viewStyle.value = v;
                   }
                 : null)),
-      const Divider(color: MyTheme.border),
+      Divider(color: VcColors.border(context)),
       for (var e in imageQualityRadios)
         Obx(() => getRadio<String>(
             e.child,
@@ -665,7 +666,7 @@ void showOptions(
                     if (v != null) imageQuality.value = v;
                   }
                 : null)),
-      const Divider(color: MyTheme.border),
+      Divider(color: VcColors.border(context)),
       for (var e in codecRadios)
         Obx(() => getRadio<String>(
             e.child,
@@ -677,7 +678,7 @@ void showOptions(
                     if (v != null) codec.value = v;
                   }
                 : null)),
-      if (codecRadios.isNotEmpty) const Divider(color: MyTheme.border),
+      if (codecRadios.isNotEmpty) Divider(color: VcColors.border(context)),
     ];
 
     final rxToggleValues = displayToggles.map((e) => e.value.obs).toList();
@@ -702,7 +703,7 @@ void showOptions(
 
     var popupDialogMenus = List<Widget>.empty(growable: true);
     if (popupDialogMenus.isNotEmpty) {
-      popupDialogMenus.add(const Divider(color: MyTheme.border));
+      popupDialogMenus.add(Divider(color: VcColors.border(context)));
     }
 
     return CustomAlertDialog(

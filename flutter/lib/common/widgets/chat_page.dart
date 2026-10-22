@@ -1,6 +1,7 @@
 import 'package:dash_chat_2/dash_chat_2.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_hbb/common.dart';
+import 'package:flutter_hbb/common/vercel_theme.dart';
 import 'package:flutter_hbb/models/chat_model.dart';
 import 'package:get/get.dart';
 import 'package:provider/provider.dart';
@@ -49,7 +50,7 @@ class ChatPage extends StatelessWidget implements PageShape {
                           key.isOut
                               ? Icons.call_made_rounded
                               : Icons.call_received_rounded,
-                          color: MyTheme.accent)
+                          color: VcColors.muted(context))
                       .marginOnly(right: 6),
                   Text("${user.firstName}   ${user.id}"),
                   if (connected)
@@ -113,7 +114,7 @@ class ChatPage extends StatelessWidget implements PageShape {
                         isDense: true,
                         hintText: translate('Write a message'),
                         filled: true,
-                        fillColor: Theme.of(context).colorScheme.background,
+                        fillColor: VcColors.elevated(context),
                         contentPadding: EdgeInsets.all(10),
                         border: OutlineInputBorder(
                           borderRadius: BorderRadius.circular(10.0),
@@ -126,7 +127,7 @@ class ChatPage extends StatelessWidget implements PageShape {
                       sendButtonBuilder: defaultSendButton(
                         padding:
                             EdgeInsets.symmetric(horizontal: 6, vertical: 0),
-                        color: MyTheme.accent,
+                        color: VcColors.ink,
                         icon: Icons.send_rounded,
                       ),
                     ),
@@ -158,8 +159,9 @@ class ChatPage extends StatelessWidget implements PageShape {
                           (message, previousMessage, nextMessage) {
                         final isOwnMessage = message.user.id.isBlank!;
                         return defaultMessageDecoration(
-                          color:
-                              isOwnMessage ? MyTheme.accent : Colors.blueGrey,
+                          color: isOwnMessage
+                              ? VcColors.ink
+                              : VcColors.gray600,
                           borderTopLeft: 8,
                           borderTopRight: 8,
                           borderBottomRight: isOwnMessage ? 2 : 8,

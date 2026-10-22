@@ -23,6 +23,7 @@ import 'package:flutter_hbb/web/dummy.dart'
 import '../../consts.dart';
 import '../../desktop/widgets/material_mod_popup_menu.dart' as mod_menu;
 import '../../common.dart';
+import '../../common/vercel_theme.dart';
 import '../../models/model.dart';
 import '../../models/platform_model.dart';
 import '../widgets/popup_menu.dart';
@@ -313,7 +314,7 @@ class _FileManagerPageState extends State<FileManagerPage>
                                   ),
                                   barRadius: Radius.circular(15),
                                   percent: item.percent,
-                                  progressColor: MyTheme.accent,
+                                  progressColor: VcColors.text(context),
                                   backgroundColor: Theme.of(context).hoverColor,
                                   lineHeight: kDesktopFileTransferRowHeight,
                                 ).paddingSymmetric(vertical: 8),
@@ -335,8 +336,8 @@ class _FileManagerPageState extends State<FileManagerPage>
                                   "assets/refresh.svg",
                                   colorFilter: svgColor(Colors.white),
                                 ),
-                                color: MyTheme.accent,
-                                hoverColor: MyTheme.accent80,
+                                color: VcColors.muted(context),
+                                hoverColor: VcColors.elevated(context),
                               ),
                             ),
                             MenuButton(
@@ -349,8 +350,8 @@ class _FileManagerPageState extends State<FileManagerPage>
                                 jobController.jobTable.removeAt(index);
                                 jobController.cancelJob(item.id);
                               },
-                              color: MyTheme.accent,
-                              hoverColor: MyTheme.accent80,
+                              color: VcColors.muted(context),
+                              hoverColor: VcColors.elevated(context),
                             ),
                           ],
                         ).marginAll(12),
@@ -562,7 +563,7 @@ class _FileManagerViewState extends State<FileManagerView> {
                           height: 50,
                           decoration: BoxDecoration(
                             borderRadius: BorderRadius.all(Radius.circular(8)),
-                            color: MyTheme.accent,
+                            color: VcColors.elevated(context),
                           ),
                           padding: EdgeInsets.all(8.0),
                           child: FutureBuilder<String>(
@@ -801,7 +802,8 @@ class _FileManagerViewState extends State<FileManagerView> {
                               mainAxisAlignment: MainAxisAlignment.center,
                               children: [
                                 SvgPicture.asset("assets/folder_new.svg",
-                                    colorFilter: svgColor(MyTheme.accent)),
+                                    colorFilter:
+                                        svgColor(VcColors.muted(context))),
                                 Text(
                                   translate("Create Folder"),
                                 ).paddingOnly(
@@ -880,8 +882,8 @@ class _FileManagerViewState extends State<FileManagerView> {
                                 : EdgeInsets.only(right: 10)),
                         backgroundColor: MaterialStateProperty.all(
                           selectedItems.items.isEmpty
-                              ? MyTheme.accent80
-                              : MyTheme.accent,
+                              ? VcColors.gray400
+                              : VcColors.ink,
                         ),
                       ),
                       onPressed: () =>
@@ -939,8 +941,8 @@ class _FileManagerViewState extends State<FileManagerView> {
                               : EdgeInsets.only(right: 10)),
                       backgroundColor: MaterialStateProperty.all(
                         selectedItems.items.isEmpty
-                            ? MyTheme.accent80
-                            : MyTheme.accent,
+                            ? VcColors.gray400
+                            : VcColors.ink,
                       ),
                     ),
                     onPressed: SelectedItems.valid(selectedItems.items)
@@ -957,10 +959,7 @@ class _FileManagerViewState extends State<FileManagerView> {
                             textAlign: TextAlign.right,
                             style: TextStyle(
                               color: selectedItems.items.isEmpty
-                                  ? Theme.of(context).brightness ==
-                                          Brightness.light
-                                      ? MyTheme.grayBg
-                                      : MyTheme.darkGray
+                                  ? VcColors.faint(context)
                                   : Colors.white,
                             ),
                           )
@@ -972,10 +971,7 @@ class _FileManagerViewState extends State<FileManagerView> {
                                   "assets/arrow.svg",
                                   colorFilter: svgColor(
                                       selectedItems.items.isEmpty
-                                          ? Theme.of(context).brightness ==
-                                                  Brightness.light
-                                              ? MyTheme.grayBg
-                                              : MyTheme.darkGray
+                                          ? VcColors.faint(context)
                                           : Colors.white),
                                   alignment: Alignment.bottomRight,
                                 ),
@@ -994,10 +990,7 @@ class _FileManagerViewState extends State<FileManagerView> {
                             translate(isWeb ? 'Download' : 'Receive'),
                             style: TextStyle(
                               color: selectedItems.items.isEmpty
-                                  ? Theme.of(context).brightness ==
-                                          Brightness.light
-                                      ? MyTheme.grayBg
-                                      : MyTheme.darkGray
+                                  ? VcColors.faint(context)
                                   : Colors.white,
                             ),
                           ),
@@ -1192,14 +1185,14 @@ class _FileManagerViewState extends State<FileManagerView> {
             child: Obx(() => Container(
                 decoration: BoxDecoration(
                   color: selectedItems.items.contains(entry)
-                      ? MyTheme.button
+                      ? VcColors.ink
                       : Theme.of(context).cardColor,
                   borderRadius: BorderRadius.all(
                     Radius.circular(5.0),
                   ),
                   border: rightClickEntry.value == entry
                       ? Border.all(
-                          color: MyTheme.button,
+                          color: VcColors.ink,
                           width: 1.0,
                         )
                       : null,

@@ -2,6 +2,7 @@ import 'package:auto_size_text/auto_size_text.dart';
 import 'package:debounce_throttle/debounce_throttle.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_hbb/common.dart';
+import 'package:flutter_hbb/common/vercel_theme.dart';
 import 'package:flutter_hbb/models/platform_model.dart';
 import 'package:get/get.dart';
 import 'package:provider/provider.dart';
@@ -68,7 +69,7 @@ class DraggableChatWindow extends StatelessWidget {
               );
               return Container(
                   decoration:
-                      BoxDecoration(border: Border.all(color: MyTheme.border)),
+                      BoxDecoration(border: Border.all(color: VcColors.border(context))),
                   child: child);
             });
   }
@@ -204,7 +205,7 @@ class DraggableMobileActions extends StatelessWidget {
                   shadowColor: Colors.transparent,
                   child: Container(
                     decoration: BoxDecoration(
-                        color: MyTheme.accent.withOpacity(0.4),
+                        color: VcColors.ink.withOpacity(0.72),
                         borderRadius:
                             BorderRadius.all(Radius.circular(15 * scale))),
                     child: Row(
@@ -547,7 +548,7 @@ class IOSDraggableState extends State<IOSDraggable> {
                 width: _width,
                 height: _height,
                 decoration:
-                    BoxDecoration(border: Border.all(color: MyTheme.border)),
+                    BoxDecoration(border: Border.all(color: VcColors.border(context))),
                 child: widget.builder(context),
               ),
             ),

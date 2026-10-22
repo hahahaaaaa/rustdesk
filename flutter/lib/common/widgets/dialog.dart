@@ -16,6 +16,7 @@ import 'package:qr_flutter/qr_flutter.dart';
 import 'package:flutter_hbb/utils/http_service.dart' as http;
 
 import '../../common.dart';
+import '../../common/vercel_theme.dart';
 import '../../models/model.dart';
 import '../../models/platform_model.dart';
 import 'address_book.dart';
@@ -163,12 +164,12 @@ void changeIdDialog() {
                             e.name,
                             style: TextStyle(
                                 color: checked
-                                    ? const Color(0xFF0A9471)
-                                    : Color.fromARGB(255, 198, 86, 157)),
+                                    ? VcColors.text(context)
+                                    : Colors.red[700]),
                           ),
                           backgroundColor: checked
-                              ? const Color(0xFFD0F7ED)
-                              : Color.fromARGB(255, 247, 205, 232));
+                              ? VcColors.elevated(context)
+                              : const Color(0xFFFDECEC));
                     }).toList(),
                   )).marginOnly(bottom: 8)
               : SizedBox.shrink(),
@@ -879,7 +880,7 @@ class _PasswordWidgetState extends State<PasswordWidget> {
         icon: Icon(
             // Based on passwordVisible state choose the icon
             _passwordVisible ? Icons.visibility : Icons.visibility_off,
-            color: MyTheme.lightTheme.primaryColor),
+            color: VcColors.muted(context)),
         onPressed: () {
           // Update the state i.e. toggle the state of passwordVisible variable
           setState(() {
@@ -1108,7 +1109,7 @@ _connectDialog(
       title: Row(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
-          Icon(Icons.password_rounded, color: MyTheme.accent),
+          Icon(Icons.password_rounded, color: VcColors.text(context)),
           Text(translate('Password Required')).paddingOnly(left: 10),
         ],
       ),
@@ -1233,10 +1234,13 @@ void showRequestElevationDialog(
     padding: EdgeInsets.fromLTRB(10, 8, 8, 8),
     decoration: BoxDecoration(
       color: MyTheme.currentThemeMode() == ThemeMode.dark
-          ? Color.fromARGB(135, 87, 87, 90)
-          : Colors.grey[100],
+          ? VcColors.darkElevated
+          : VcColors.gray50,
       borderRadius: BorderRadius.circular(8),
-      border: Border.all(color: Colors.grey),
+      border: Border.all(
+          color: MyTheme.currentThemeMode() == ThemeMode.dark
+              ? VcColors.darkBorder
+              : VcColors.gray100),
     ),
     child: Row(
       children: [
@@ -1470,7 +1474,7 @@ showSetOSPassword(
       title: Row(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
-          Icon(Icons.password_rounded, color: MyTheme.accent),
+          Icon(Icons.password_rounded, color: VcColors.text(context)),
           Text(translate('OS Password')).paddingOnly(left: 10),
         ],
       ),
@@ -2174,7 +2178,7 @@ void renameDialog(
       title: Row(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
-          Icon(Icons.edit_rounded, color: MyTheme.accent),
+          Icon(Icons.edit_rounded, color: VcColors.text(context)),
           Text(translate('Rename')).paddingOnly(left: 10),
         ],
       ),
@@ -2525,7 +2529,7 @@ void addPeersToAbDialog(
       title: Row(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
-          Icon(IconFont.addressBook, color: MyTheme.accent),
+          Icon(IconFont.addressBook, color: VcColors.text(context)),
           Text(translate('Add to address book')).paddingOnly(left: 10),
         ],
       ),
@@ -2600,7 +2604,7 @@ void setSharedAbPasswordDialog(String abName, Peer peer) {
       title: Row(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
-          Icon(Icons.key, color: MyTheme.accent),
+          Icon(Icons.key, color: VcColors.text(context)),
           Text(translate(peer.password.isEmpty
                   ? 'Set shared password'
                   : 'Change Password'))
@@ -2616,7 +2620,7 @@ void setSharedAbPasswordDialog(String abName, Peer peer) {
                 suffixIcon: IconButton(
                   icon: Icon(
                       passwordVisible ? Icons.visibility : Icons.visibility_off,
-                      color: MyTheme.lightTheme.primaryColor),
+                      color: VcColors.muted(context)),
                   onPressed: () {
                     setState(() {
                       passwordVisible = !passwordVisible;
@@ -2627,7 +2631,8 @@ void setSharedAbPasswordDialog(String abName, Peer peer) {
             ).workaroundFreezeLinuxMint(),
             if (!gFFI.abModel.current.isPersonal())
               Row(children: [
-                Icon(Icons.info, color: Colors.amber).marginOnly(right: 4),
+                Icon(Icons.info, color: VcColors.faint(context))
+                    .marginOnly(right: 4),
                 Text(
                   translate('share_warning_tip'),
                   style: TextStyle(fontSize: 12),

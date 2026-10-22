@@ -23,6 +23,7 @@ import 'package:provider/provider.dart';
 import 'package:pull_down_button/pull_down_button.dart';
 
 import '../../common.dart';
+import '../../common/vercel_theme.dart';
 import '../../models/platform_model.dart';
 
 class PeerTabPage extends StatefulWidget {
@@ -348,7 +349,7 @@ class _PeerTabPageState extends State<PeerTabPage>
             .map((entry) => entry.build(
                 context,
                 const MenuConfig(
-                  commonColor: MyTheme.accent,
+                  commonColor: VcColors.link,
                   height: 20.0,
                   dividerHeight: 12.0,
                 )))

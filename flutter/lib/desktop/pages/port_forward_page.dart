@@ -3,6 +3,7 @@ import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_hbb/common.dart';
+import 'package:flutter_hbb/common/vercel_theme.dart';
 import 'package:flutter_hbb/desktop/widgets/tabbar_widget.dart';
 import 'package:flutter_hbb/models/model.dart';
 import 'package:flutter_hbb/models/platform_model.dart';
@@ -112,8 +113,10 @@ class _PortForwardPageState extends State<PortForwardPage>
                 Flexible(
                   child: Container(
                     decoration: BoxDecoration(
-                        color: Theme.of(context).colorScheme.background,
-                        border: Border.all(width: 1, color: MyTheme.border)),
+                        color: VcColors.surface(context),
+                        borderRadius: BorderRadius.circular(10),
+                        border: Border.all(
+                            width: 1, color: VcColors.border(context))),
                     child:
                         widget.isRDP ? buildRdp(context) : buildTunnel(context),
                   ),
@@ -131,19 +134,25 @@ class _PortForwardPageState extends State<PortForwardPage>
     return Obx(() => Offstage(
           offstage: pfs.isEmpty && !widget.isRDP,
           child: Container(
-              height: 45,
-              color: const Color(0xFF007F00),
+              height: 48,
+              decoration: BoxDecoration(
+                color: VcColors.ink,
+                borderRadius: BorderRadius.circular(8),
+              ),
               child: Column(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
                     Text(
                       translate('Listening ...'),
-                      style: const TextStyle(fontSize: 16, color: Colors.white),
+                      style: const TextStyle(
+                          fontSize: 14,
+                          fontWeight: FontWeight.w500,
+                          color: Colors.white),
                     ),
                     Text(
                       translate('not_close_tcp_tip'),
                       style: const TextStyle(
-                          fontSize: 10, color: Color(0xFFDDDDDD), height: 1.2),
+                          fontSize: 11, color: Color(0xFFA1A1A1), height: 1.2),
                     )
                   ])).marginOnly(bottom: 8),
         ));
@@ -251,17 +260,15 @@ class _PortForwardPageState extends State<PortForwardPage>
 
   Widget buildTunnelDataRow(BuildContext context, _PortForward pf, int index) {
     text(String label) => Expanded(
-        child: Text(label, style: const TextStyle(fontSize: 20))
+        child: Text(label, style: VcType.monoValue(context, size: 14))
             .marginOnly(left: _kTextLeftMargin));
 
     return Container(
       height: _kRowHeight,
       decoration: BoxDecoration(
           color: index % 2 == 0
-              ? MyTheme.currentThemeMode() == ThemeMode.dark
-                  ? const Color(0xFF202020)
-                  : const Color(0xFFF4F5F6)
-              : Theme.of(context).colorScheme.background),
+              ? VcColors.elevated(context)
+              : VcColors.surface(context)),
       child: Row(children: [
         text(pf.localPort.toString()),
         const SizedBox(width: _kColumn1Width),
@@ -299,7 +306,7 @@ class _PortForwardPageState extends State<PortForwardPage>
     text2(String label) => Expanded(
             child: Text(
           label,
-          style: const TextStyle(fontSize: 20),
+          style: VcType.monoValue(context, size: 14),
         ).marginOnly(left: _kTextLeftMargin));
     return Theme(
       data: Theme.of(context)
@@ -323,7 +330,7 @@ class _PortForwardPageState extends State<PortForwardPage>
               return Container(
                 height: _kRowHeight,
                 decoration: BoxDecoration(
-                    color: Theme.of(context).colorScheme.background),
+                    color: VcColors.surface(context)),
                 child: Row(children: [
                   Expanded(
                     child: Align(

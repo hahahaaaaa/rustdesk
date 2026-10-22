@@ -1074,8 +1074,8 @@ class OverlayDialogManager {
                                   style: flatButtonStyle,
                                   onPressed: cancel,
                                   child: Text(translate('Cancel'),
-                                      style: const TextStyle(
-                                          color: MyTheme.accent)))))
+                                      style: TextStyle(
+                                          color: VcColors.text(context))))))
                 ])),
         onCancel: showCancel ? cancel : null,
       );
@@ -3065,6 +3065,9 @@ bool get kUseCompatibleUiMode =>
 bool get isWin10 => windowsBuildNumber.windowsVersion == WindowsTarget.w10;
 
 class ServerConfig {
+  static const defaultIdServer = 'desktop.voltmonkey.com.cn';
+  static const defaultApiServer = 'https://desktop.voltmonkey.com.cn';
+
   late String idServer;
   late String relayServer;
   late String apiServer;
@@ -3113,10 +3116,16 @@ class ServerConfig {
 
   /// from local options
   ServerConfig.fromOptions(Map<String, dynamic> options)
-      : idServer = options['custom-rendezvous-server'] ?? "",
+      : idServer = _withDefault(
+            options['custom-rendezvous-server'], defaultIdServer),
         relayServer = options['relay-server'] ?? "",
-        apiServer = options['api-server'] ?? "",
+        apiServer = _withDefault(options['api-server'], defaultApiServer),
         key = options['key'] ?? "";
+
+  static String _withDefault(dynamic value, String fallback) {
+    final text = value?.toString().trim() ?? '';
+    return text.isEmpty ? fallback : text;
+  }
 }
 
 Widget dialogButton(String text,
@@ -3427,7 +3436,7 @@ Widget buildErrorBanner(BuildContext context,
                     },
                     child: Text(
                       translate("Retry"),
-                      style: TextStyle(color: MyTheme.accent),
+                      style: TextStyle(color: VcColors.link),
                     )).marginSymmetric(horizontal: 5),
               FittedBox(
                 child: InkWell(
