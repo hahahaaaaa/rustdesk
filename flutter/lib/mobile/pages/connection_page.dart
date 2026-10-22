@@ -177,7 +177,7 @@ class _ConnectionPageState extends State<ConnectionPage> {
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         const SizedBox(height: 12),
-        const VcMonoLabel('RustDesk'),
+        const VcMonoLabel('VoltMonkey'),
         const SizedBox(height: 8),
         Text(
           translate('Control Remote Desktop'),

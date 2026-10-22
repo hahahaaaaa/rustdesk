@@ -330,7 +330,7 @@ class _DesktopHomePageState extends State<DesktopHomePage>
             const SizedBox(width: 8),
             Expanded(
               child: Text(
-                bind.mainGetAppNameSync(),
+                'VoltMonkey',
                 maxLines: 1,
                 overflow: TextOverflow.ellipsis,
                 style: VcType.body(context,
@@ -341,7 +341,7 @@ class _DesktopHomePageState extends State<DesktopHomePage>
           ],
         ),
         const SizedBox(height: 32),
-        const VcMonoLabel('RustDesk'),
+        const VcMonoLabel('VoltMonkey'),
         const SizedBox(height: 8),
         Text(
           translate("Your Desktop"),

@@ -352,7 +352,7 @@ class _ConnectionPageState extends State<ConnectionPage>
     var w = Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        const VcMonoLabel('RustDesk'),
+        const VcMonoLabel('VoltMonkey'),
         const SizedBox(height: 10),
         Row(
           mainAxisSize: MainAxisSize.min,

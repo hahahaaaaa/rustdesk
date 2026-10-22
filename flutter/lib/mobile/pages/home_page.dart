@@ -181,7 +181,7 @@ class HomePageState extends State<HomePage> {
         loadIcon(20),
         const SizedBox(width: 8),
         Text(
-          bind.mainGetAppNameSync(),
+          'VoltMonkey',
           style: VcType.body(context, size: 15, weight: FontWeight.w600),
         ),
       ],
@@ -205,7 +205,7 @@ class WebHomePage extends StatelessWidget {
         title: Row(
           mainAxisSize: MainAxisSize.min,
           children: [
-            Text(bind.mainGetAppNameSync()),
+            const Text('VoltMonkey'),
             const SizedBox(width: 8),
             const VcPill(label: 'Preview'),
           ],
