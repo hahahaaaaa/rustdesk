@@ -786,10 +786,11 @@ class PaddingCard extends StatelessWidget {
               padding: const EdgeInsets.fromLTRB(0, 5, 0, 8),
               child: Row(
                 children: [
-                  titleIcon
-                          ?.copyWith(color: VcColors.muted(context), size: 18)
-                          .marginOnly(right: 10) ??
-                      const SizedBox.shrink(),
+                  titleIcon == null
+                      ? const SizedBox.shrink()
+                      : Icon(titleIcon!.icon,
+                              color: VcColors.muted(context), size: 18)
+                          .marginOnly(right: 10),
                   Expanded(
                     child: Text(title!,
                         style: VcType.body(context,
