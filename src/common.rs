@@ -1206,6 +1206,28 @@ pub fn is_setup(name: &str) -> bool {
 pub const DEFAULT_RENDEZVOUS_SERVER: &str = "desktop.voltmonkey.com.cn";
 pub const DEFAULT_API_SERVER: &str = "https://desktop.voltmonkey.com.cn";
 
+/// Public key of the VoltMonkey ID server (`hbbs`), embedded so users never
+/// have to type it. This is `desktop.voltmonkey.com.cn:/data/id_ed25519.pub`.
+///
+/// Leave it empty and build with `VOLTMONKEY_PUB_KEY` set to inject the key
+/// from CI instead. Both empty means "no built-in key" and the upstream
+/// RustDesk key is used, i.e. behaviour is unchanged.
+pub const EMBEDDED_PUB_KEY: &str = "eANvomaCLWOcwFt4vzJlo3MYP+N87NuYpZTIAci4cTI=";
+
+/// Key used when the `key` option is empty: embedded key, else build-time
+/// `VOLTMONKEY_PUB_KEY`, else the upstream RustDesk public key.
+pub fn default_pub_key() -> &'static str {
+    if !EMBEDDED_PUB_KEY.is_empty() {
+        return EMBEDDED_PUB_KEY;
+    }
+    if let Some(v) = option_env!("VOLTMONKEY_PUB_KEY") {
+        if !v.is_empty() {
+            return v;
+        }
+    }
+    config::RS_PUB_KEY
+}
+
 pub fn ensure_default_server_config() {
     if Config::get_option(keys::OPTION_CUSTOM_RENDEZVOUS_SERVER).is_empty()
         && config::PROD_RENDEZVOUS_SERVER.read().unwrap().is_empty()
@@ -1217,6 +1239,12 @@ pub fn ensure_default_server_config() {
     }
     if Config::get_option(keys::OPTION_API_SERVER).is_empty() {
         Config::set_option(keys::OPTION_API_SERVER.into(), DEFAULT_API_SERVER.into());
+    }
+    // Seed the key option so Settings shows the built-in key instead of an
+    // empty field; the user can still overwrite or clear it.
+    let key = default_pub_key();
+    if key != config::RS_PUB_KEY && Config::get_option(keys::OPTION_KEY).is_empty() {
+        Config::set_option(keys::OPTION_KEY.into(), key.into());
     }
 }
 
@@ -2142,7 +2170,7 @@ pub async fn get_key(sync: bool) -> String {
         options.remove("key").unwrap_or_default()
     };
     if key.is_empty() {
-        key = config::RS_PUB_KEY.to_owned();
+        key = default_pub_key().to_owned();
     }
     key
 }

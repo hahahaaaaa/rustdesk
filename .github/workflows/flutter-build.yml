@@ -49,6 +49,10 @@ env:
   VCPKG_CMAKE_VERSION: "4.3.0"
   ARMV7_VCPKG_COMMIT_ID: "6f29f12e82a8293156836ad81cc9bf5af41fe836" # 2025.01.13, got "/opt/artifacts/vcpkg/vcpkg: No such file or directory" with latest version
   VERSION: "1.5.1"
+  # Public key of the VoltMonkey ID server, embedded at compile time. Set the
+  # repository variable of the same name to build clients that never ask for a
+  # key; leave it unset to keep the upstream behaviour.
+  VOLTMONKEY_PUB_KEY: ${{ vars.VOLTMONKEY_PUB_KEY }}
   NDK_VERSION: "r28c"
   #signing keys env variable checks
   ANDROID_SIGNING_KEY: "${{ secrets.ANDROID_SIGNING_KEY }}"
